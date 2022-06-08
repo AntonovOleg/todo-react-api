@@ -1,6 +1,6 @@
 // import { PromiseProvider } from "mongoose";
 import React from "react";
-import "./Filters.css";
+import "./Styles/Filters.css";
 
 const Filters = (props) => {
   const { filterMode, setFilterMode } = props;

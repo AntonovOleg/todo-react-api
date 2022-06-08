@@ -5,7 +5,7 @@ const ItemCounter = (props) => {
   return (
     <React.Fragment>
       <div className="item-counter">
-        Активных задач: {props.active_todos.length}
+        Активных задач: {props.activeTodos.length}
       </div>
     </React.Fragment>
   );

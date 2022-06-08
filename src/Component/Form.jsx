@@ -2,7 +2,7 @@ import React from "react";
 import InputField from "./InputField.jsx";
 
 const Form = (props) => {
-  const { setText, text, createTodo, getAll, selectAll } = props;
+  const { setText, text, createTodo, selectAll } = props;
   return (
     <React.Fragment>
       <h4>Добавить задачу</h4>

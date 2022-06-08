@@ -1,53 +1,26 @@
 import axios from "axios";
 
-export const axios_put = async (id, todo, isDone, getAll) => {
-  try {
-    await axios
-      .put(`todo/id/${id}/modify`, { id, todo, isDone })
-      .then((response) => {
-        getAll();
-      });
-  } catch {
-    console.log("Ошибка в services axios_put");
-  }
+const instance = axios.create({
+  baseURL: "http://localhost:7000/todo",
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
+export const apiModify = async (id, todo, isDone) => {
+  await instance
+    .put(`id/${id}/modify`, { id, todo, isDone })
+    .then((response) => response);
 };
 
-export const axios_get_all = async (adress, data, setTodos) => {
-  axios
-    .get("/todo/getall", {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-    .then((response) => {
-      setTodos(response.data);
-    });
+export const apiGetAll = async () => {
+  return instance.get("/getall").then((response) => response.data);
 };
 
-export const axios_delete = async (id, getAll) => {
-  await axios
-    .delete(
-      `todo/id/${id}/delete`,
-      { id },
-      {
-        headers: { "Content-Type": "application/json" },
-      }
-    )
-    .then(() => {});
-  getAll();
+export const apiDelete = async (id) => {
+  await instance.delete(`id/${id}/delete`, { id });
 };
 
-export const axios_create = async (text, todos, setText, setTodos) => {
-  await axios
-    .post(
-      "todo/create",
-      { todo: text },
-      {
-        headers: { "Content-Type": "application/json" },
-      }
-    )
-    .then((response) => {
-      setTodos([...todos, response.data]);
-      setText("");
-    });
+export const apiCreate = async (text) => {
+  await instance.post("create", { todo: text });
 };
