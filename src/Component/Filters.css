@@ -1,0 +1,14 @@
+.selected {
+  background-color: rgb(0, 255, 115);
+  border: 1px solid black;
+  transition: 0.5s;
+}
+.filter {
+  cursor: pointer;
+  margin: 5px;
+  padding: 5px;
+}
+.filters-wrapper {
+  display: flex;
+  justify-content: center;
+}

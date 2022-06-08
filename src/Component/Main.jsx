@@ -5,6 +5,7 @@ import axios from "axios";
 import Form from "./Form.jsx";
 import Todos from "./Todos.jsx";
 import ItemCounter from "./ItemCounter";
+import Filters from "./Filters.jsx";
 import {
   axios_put,
   axios_get_all,
@@ -15,6 +16,35 @@ import {
 const Main = () => {
   const [text, setText] = useState("");
   const [todos, setTodos] = useState([]);
+  const [filterMode, setFilterMode] = useState("All");
+  const [firstLoading, setFirstLoading] = useState(true);
+
+  //Активные задания
+  const active_todos = todos.filter((current) => {
+    return !current.isDone;
+  });
+
+  //Завершенные задания
+  const completed_todos = todos.filter((current) => {
+    return current.isDone;
+  });
+
+  //Задания на рендер
+  let render_todos = [];
+  switch (filterMode) {
+    case "All":
+      render_todos = [...todos];
+      break;
+    case "Active":
+      render_todos = [...active_todos];
+      break;
+    case "Completed":
+      render_todos = [...completed_todos];
+      break;
+    default:
+      alert("Ошибка определения фильтра (switch)");
+      break;
+  }
 
   const createTodo = useCallback(async () => {
     if (!text) return null;
@@ -67,7 +97,10 @@ const Main = () => {
   };
 
   //Считывание данных при старте
-  // getAll(); //бесконечный цикл
+  if(firstLoading) {
+    setFirstLoading(false);
+    getAll();
+  }
 
   return (
     <div className="container">
@@ -80,8 +113,13 @@ const Main = () => {
           selectAll={selectAll}
         />
 
-        <Todos todos={todos} complete={complete} removeTodos={removeTodos} />
-        <ItemCounter />
+        <Todos
+          todos={render_todos}
+          complete={complete}
+          removeTodos={removeTodos}
+        />
+        <ItemCounter active_todos={active_todos} />
+        <Filters filterMode={filterMode} setFilterMode={setFilterMode} />
       </div>
     </div>
   );

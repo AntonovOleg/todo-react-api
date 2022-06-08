@@ -6,7 +6,7 @@ const Todos = (props) => {
 
   return (
     <React.Fragment>
-      <h3>Активные задачт</h3>
+      <h3>Активные задачи</h3>
       <div className="todos">
         {todos.map((todo, index) => {
           return (
