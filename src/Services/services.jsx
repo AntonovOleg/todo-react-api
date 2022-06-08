@@ -1,16 +1,15 @@
-import { getAllByAltText } from "@testing-library/react";
 import axios from "axios";
-// import { useState, useContext, useCallback } from "react";
 
 export const axios_put = async (id, todo, isDone, getAll) => {
   try {
     await axios
       .put(`todo/id/${id}/modify`, { id, todo, isDone })
-      .then((response) => {});
+      .then((response) => {
+        getAll();
+      });
   } catch {
     console.log("Ошибка в services axios_put");
   }
-  getAll();
 };
 
 export const axios_get_all = async (adress, data, setTodos) => {
@@ -26,8 +25,6 @@ export const axios_get_all = async (adress, data, setTodos) => {
 };
 
 export const axios_delete = async (id, getAll) => {
-  console.log("ID для удаления: ", id);
-
   await axios
     .delete(
       `todo/id/${id}/delete`,

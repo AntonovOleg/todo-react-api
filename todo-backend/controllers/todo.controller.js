@@ -5,20 +5,15 @@ exports.todo_test = function (req, res) {
 };
 
 exports.todo_create = function (req, res) {
-  console.log("todo create");
-  console.log("getted todo:",req.body.todo);
-
-
   let todo = new Todo({
     todo: req.body.todo,
-    isDone: false
+    isDone: false,
   });
 
   todo.save(function (err, data) {
     if (err) return next(err);
-    console.log(data._id.toString());
     res.send(data);
-  })
+  });
 };
 
 exports.todo_details = function (req, res) {
@@ -29,7 +24,6 @@ exports.todo_details = function (req, res) {
 };
 
 exports.todo_update = function (req, res) {
-  console.log("BACKEND MODIFYING TODO");
   Todo.findByIdAndUpdate(
     req.params.id,
     { $set: req.body },

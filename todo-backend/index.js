@@ -12,7 +12,7 @@ let dev_db_url =
 let mongoDB = process.env.MONGODB_URI || dev_db_url;
 mongoose
   .connect(mongoDB)
-  .then(() => console.log("Connected"))
+  .then(() => console.log("Connected to DataBase"))
   .catch((err) => console.log("At connection catch error ", err));
 mongoose.Promise = global.Promise;
 

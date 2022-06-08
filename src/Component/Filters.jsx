@@ -22,19 +22,19 @@ const Filters = (props) => {
           className={btnFilterAllClassName}
           onClick={() => setFilterMode("All")}
         >
-          All
+          Все
         </div>
         <div
           className={btnFilterActiveClassName}
           onClick={() => setFilterMode("Active")}
         >
-          Active
+          Активные
         </div>
         <div
           className={btnFilterCompletedClassName}
           onClick={() => setFilterMode("Completed")}
         >
-          Completed
+          Завершённые
         </div>
       </div>
     </React.Fragment>

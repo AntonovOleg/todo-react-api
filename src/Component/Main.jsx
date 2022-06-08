@@ -29,7 +29,7 @@ const Main = () => {
     return current.isDone;
   });
 
-  //Задания на рендер
+  //Задания на рендер (берется готовый фильтрованный массив)
   let render_todos = [];
   switch (filterMode) {
     case "All":
