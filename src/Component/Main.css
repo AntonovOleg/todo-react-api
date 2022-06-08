@@ -1,0 +1,25 @@
+.todos {
+  margin-top: 50px;
+  overflow-y: auto;
+  height: 300px;
+}
+.todos .item {
+  padding: 10 15;
+  display: flex;
+  cursor: pointer;
+  border-left: 2px solid #2196f3;
+}
+
+.buttons {
+  margin-left: auto;
+  display: flex;
+}
+
+.done {
+  text-decoration:line-through;
+  color: gray;
+}
+
+.item-btn {
+  cursor: pointer;
+}
