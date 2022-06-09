@@ -7,14 +7,13 @@ exports.todo_test = function (req, res) {
 exports.todo_create = function (req, res) {
   let todo = new Todo({
     todo: req.body.todo,
-    isDone: req.body.isDone,
-    id: req.body.id,
+    isDone: false,
   });
 
-  todo.save(function (err, test) {
+  todo.save(function (err, data) {
     if (err) return next(err);
-    res.send(test);
-  })
+    res.send(data);
+  });
 };
 
 exports.todo_details = function (req, res) {
@@ -39,6 +38,13 @@ exports.todo_delete = function (req, res) {
   Todo.findByIdAndDelete(req.params.id, function (err) {
     if (err) return next(err);
     res.send("Todo successfully deleted");
+  });
+};
+
+exports.todo_delete_all = function (req, res) {
+  Todo.deleteMany(null, null, function (err) {
+    if (err) return next(err);
+    res.send("All Todos deleted successfully");
   });
 };
 

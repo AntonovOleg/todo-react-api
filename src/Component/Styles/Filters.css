@@ -1,0 +1,15 @@
+.selected {
+  background-color: rgb(45, 136, 255);
+  border: 1px solid black;
+  transition: 0.5s;
+  color:rgb(255, 255, 255);
+}
+.filter {
+  cursor: pointer;
+  margin: 5px;
+  padding: 5px;
+}
+.filters-wrapper {
+  display: flex;
+  justify-content: center;
+}

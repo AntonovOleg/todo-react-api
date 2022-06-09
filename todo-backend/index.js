@@ -1,10 +1,9 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-
 const todo = require("./routes/todo.route.js");
 const app = express();
-
 const mongoose = require("mongoose");
+const cors = require("cors");
 
 let dev_db_url =
   "mongodb+srv://OlegAntonov:Antonov_123@olegclaster.t6nr6.mongodb.net/?retryWrites=true&w=majority";
@@ -12,13 +11,14 @@ let dev_db_url =
 let mongoDB = process.env.MONGODB_URI || dev_db_url;
 mongoose
   .connect(mongoDB)
-  .then(() => console.log("Connected"))
+  .then(() => console.log("Connected to DataBase"))
   .catch((err) => console.log("At connection catch error ", err));
 mongoose.Promise = global.Promise;
 
 let db = mongoose.connection;
 db.on("error", console.error.bind(console, "Connection at connect MongoDB"));
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use("/todo", todo);
