@@ -1,12 +1,9 @@
 import React from "react";
-import { useState } from "react";
 
-const ItemCounter = (props) => {
+const ItemCounter = ({ activeTodos }) => {
   return (
     <React.Fragment>
-      <div className="item-counter">
-        Активных задач: {props.activeTodos.length}
-      </div>
+      <div className="item-counter">Активных задач: {activeTodos.length}</div>
     </React.Fragment>
   );
 };

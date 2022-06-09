@@ -6,7 +6,6 @@ export const useRoutes = () => {
   return (
     <Routes>
       <Route path="/" exact component={<Main />} />
-      {/* <Navigate to="/" /> */}
     </Routes>
   )
 }

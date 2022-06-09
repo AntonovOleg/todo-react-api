@@ -1,4 +1,3 @@
-// import { PromiseProvider } from "mongoose";
 import React from "react";
 import "./Styles/Filters.css";
 
@@ -16,28 +15,26 @@ const Filters = (props) => {
   }`;
 
   return (
-    <React.Fragment>
-      <div className="filters-wrapper">
-        <div
-          className={btnFilterAllClassName}
-          onClick={() => setFilterMode("All")}
-        >
-          Все
-        </div>
-        <div
-          className={btnFilterActiveClassName}
-          onClick={() => setFilterMode("Active")}
-        >
-          Активные
-        </div>
-        <div
-          className={btnFilterCompletedClassName}
-          onClick={() => setFilterMode("Completed")}
-        >
-          Завершённые
-        </div>
+    <div className="filters-wrapper">
+      <div
+        className={btnFilterAllClassName}
+        onClick={() => setFilterMode("All")}
+      >
+        Все
       </div>
-    </React.Fragment>
+      <div
+        className={btnFilterActiveClassName}
+        onClick={() => setFilterMode("Active")}
+      >
+        Активные
+      </div>
+      <div
+        className={btnFilterCompletedClassName}
+        onClick={() => setFilterMode("Completed")}
+      >
+        Завершённые
+      </div>
+    </div>
   );
 };
 

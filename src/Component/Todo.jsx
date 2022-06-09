@@ -2,8 +2,8 @@ import React from "react";
 import { useState } from "react";
 
 const Todo = (props) => {
-  const { todo, index, complete, removeTodos } = props;
-  const { editable, setEditable } = useState(false);
+  const { todo, index, complete, removeTodos, modify } = props;
+  const [editable, setEditable] = useState(false);
   //установка класса в зависимости от выбранного фильтра
   const clsName = `col todos-text ${todo.isDone ? "done" : ""}`;
   //для элемента в режиме текст
@@ -14,18 +14,24 @@ const Todo = (props) => {
   );
   //для элемента в режиме редактирования
   const todoEditElem = (
-    <input
-      onDoubleClick={() => setEditable(!editable)}
-      type="text"
-      value={todo.todo}
-      className={clsName}
-    ></input>
+    <div className="editable input-field col s8">
+      <input
+        onDoubleClick={() => setEditable(!editable)}
+        type="text"
+        value={todo.todo}
+        onChange={(e) => changerTodo(e)}
+        className={clsName}
+      />
+    </div>
   );
+  const changerTodo = (e) => {
+    modify(todo._id, e.target.value, false);
+  };
   //текущий элемент выбирается исходя из состояния
   const todoElem = editable ? todoEditElem : todoTextElem;
 
   return (
-    <div className="row flex todos-item" key={index}>
+    <div className="row row-todos flex todos-item">
       <div className="col todos-num">{index + 1}</div>
 
       {todoElem}

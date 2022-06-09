@@ -41,6 +41,13 @@ exports.todo_delete = function (req, res) {
   });
 };
 
+exports.todo_delete_all = function (req, res) {
+  Todo.deleteMany(null, null, function (err) {
+    if (err) return next(err);
+    res.send("All Todos deleted successfully");
+  });
+};
+
 exports.todoGetAll = function (req, res) {
   Todo.find({}, function (err, todos) {
     if (err) return next(err);

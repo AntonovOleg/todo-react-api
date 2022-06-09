@@ -14,11 +14,17 @@ export const apiModify = async (id, todo, isDone) => {
 };
 
 export const apiGetAll = async () => {
-  return instance.get("/getall").then((response) => response.data);
+  return instance.get("/getall").then((response) => {
+    return response.data;
+  });
 };
 
 export const apiDelete = async (id) => {
-  await instance.delete(`id/${id}/delete`, { id });
+  return await instance.delete(`id/${id}/delete`, { id });
+};
+
+export const apiDeleteAll = async () => {
+  return await instance.delete("delete_all");
 };
 
 export const apiCreate = async (text) => {

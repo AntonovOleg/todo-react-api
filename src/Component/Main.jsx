@@ -1,5 +1,4 @@
-import React from "react";
-import { useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import "./Styles/Main.css";
 
 import Form from "./Form.jsx";
@@ -11,41 +10,39 @@ import {
   apiGetAll,
   apiDelete,
   apiCreate,
+  apiDeleteAll,
 } from "../Services/services.jsx";
 
 const Main = () => {
   const [text, setText] = useState("");
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState(null);
   const [filterMode, setFilterMode] = useState("All");
-  const [firstLoading, setFirstLoading] = useState(true);
+  const [activeTodos, setActiveTodos] = useState([]);
+  const [completedTodos, setCompletedTodos] = useState([]);
+  const [renderTodos, setRenderTodos] = useState([]);
 
-  //Задания на рендер (берется готовый фильтрованный массив)
-  let renderTodos = [];
-  switch (filterMode) {
-    case "All":
-      renderTodos = [...todos];
-      break;
-    case "Active":
-      renderTodos = [...activeTodos];
-      break;
-    case "Completed":
-      renderTodos = [...completedTodos];
-      break;
-    default:
-      alert("Ошибка определения фильтра (switch)");
-      break;
-  }
+  useEffect(() => {
+    if (!todos) {
+      getAll();
+    }
+    initFiltersData();
+  }, [todos, filterMode]);
 
   const createTodo = () => {
     if (!text) return null;
-    apiCreate(text).then((todo) => setTodos(todo));
+    apiCreate(text).then(() => {
+      getAll();
+    });
+    setText("");
   };
 
   const getAll = () => {
-    apiGetAll().then((todo) => setTodos(todo));
+    apiGetAll().then((todo) => {
+      setTodos(todo);
+    });
   };
 
-  const removeTodos = useCallback(async (id) => {
+  const removeTodos = useCallback((id) => {
     apiDelete(id).then(() => getAll());
   });
 
@@ -55,7 +52,7 @@ const Main = () => {
     modify(currentTodo._id, currentTodo.todo, !currentTodo.isDone);
   };
 
-  const modify = useCallback(async (id, todo, isDone) => {
+  const modify = useCallback((id, todo, isDone) => {
     apiModify(id, todo, isDone).then(() => getAll());
   });
 
@@ -68,21 +65,33 @@ const Main = () => {
     setTodos(todosTmp);
   };
 
-  //Считывание данных при старте
-  if (firstLoading) {
-    setFirstLoading(false);
-    getAll();
-  }
+  const deleteAll = () => {
+    apiDeleteAll();
+    setRenderTodos([]);
+  };
 
-  //Активные задания
-  const activeTodos = todos.filter((current) => {
-    return !current.isDone;
-  });
-
-  //Завершенные задания
-  const completedTodos = todos.filter((current) => {
-    return current.isDone;
-  });
+  const initFiltersData = () => {
+    if (!todos) return null;
+    //Активные
+    setActiveTodos(todos.filter((current) => !current.isDone));
+    //Завершенные
+    setCompletedTodos(todos.filter((current) => current.isDone));
+    // Текущий
+    switch (filterMode) {
+      case "All":
+        setRenderTodos([...todos]);
+        break;
+      case "Active":
+        setRenderTodos([...activeTodos]);
+        break;
+      case "Completed":
+        setRenderTodos([...completedTodos]);
+        break;
+      default:
+        alert("Ошибка определения фильтра (switch)");
+        break;
+    }
+  };
 
   return (
     <div className="container">
@@ -99,8 +108,13 @@ const Main = () => {
           todos={renderTodos}
           complete={complete}
           removeTodos={removeTodos}
+          modify={modify}
+          selectAll={selectAll}
+          deleteAll={deleteAll}
         />
+
         <ItemCounter activeTodos={activeTodos} />
+
         <Filters filterMode={filterMode} setFilterMode={setFilterMode} />
       </div>
     </div>
