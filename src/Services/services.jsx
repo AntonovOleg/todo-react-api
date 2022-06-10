@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "http://localhost:7000/todo",
+  baseURL: "https://todo-list-api-mern.herokuapp.com/todo",
   headers: {
     "Content-Type": "application/json",
   },
