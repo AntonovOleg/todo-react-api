@@ -26,7 +26,7 @@ const Main = () => {
       getAll();
     }
     initFiltersData();
-  }, [todos, filterMode]);
+  }, [todos, filterMode, initFiltersData]);
 
   const createTodo = () => {
     if (!text) return null;
