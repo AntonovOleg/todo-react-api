@@ -5,6 +5,8 @@ const app = express();
 const mongoose = require("mongoose");
 const cors = require("cors");
 
+require("dotenv").config();
+
 let dev_db_url =
   "mongodb+srv://OlegAntonov:Antonov_123@olegclaster.t6nr6.mongodb.net/?retryWrites=true&w=majority";
 
